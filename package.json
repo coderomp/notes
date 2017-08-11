@@ -1,0 +1,36 @@
+{
+  "name": "notes",
+  "version": "0.0.1",
+  "description": "Web application for taking notes.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/coderomp/notes.git"
+  },
+  "keywords": [
+    "notes",
+    "nodejs",
+    "application",
+    "note",
+    "logging",
+    "searchable",
+    "find",
+    "search"
+  ],
+  "author": "Steve Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coderomp/notes/issues"
+  },
+  "homepage": "https://github.com/coderomp/notes#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mysql2": "^1.4.0",
+    "sequelize": "^4.4.3",
+    "sequelize-cli": "^2.8.0"
+  }
+}
