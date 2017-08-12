@@ -1,0 +1,12 @@
+.hidden {
+    display: none;
+}
+
+div.bottom {
+  position: fixed;
+  bottom: 0;
+
+  /* And if you want the div to be full-width: */
+  left: 0;
+  right: 0;
+}

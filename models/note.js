@@ -1,13 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Note = sequelize.define("note", {
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    body: {
+    note: {
       type: DataTypes.TEXT,
       allowNull: false,
       len: [1]
