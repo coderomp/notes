@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/coderomp/notes#readme",
   "dependencies": {
+    "anchorme": "^1.1.2",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "forever": "^0.15.3",

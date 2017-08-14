@@ -7,6 +7,7 @@
 
 // Requiring our models
 var db = require("../models");
+var anchorme = require("anchorme").default;
 
 // Routes
 // =============================================================
@@ -18,10 +19,12 @@ module.exports = function(app) {
     if (req.query.note_id) {
       query.id = req.query.id;
     }
-    // Here we add an "include" property to our options in our findAll query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Author
+
     db.note.findAll({}).then(function(data) {
+      for (var i = 0; i < data.length; i++) {
+        data[i].note = anchorme(data[i].note);
+      }
+
       res.json(data);
     });
   });
@@ -39,6 +42,10 @@ module.exports = function(app) {
     }
 
     db.note.findAll(filter).then(function(data) {
+      for (var i = 0; i < data.length; i++) {
+        data[i].note = anchorme(data[i].note);
+      }
+
       res.json(data);
     });
   });
@@ -64,6 +71,8 @@ module.exports = function(app) {
     note.noteTypeId = 1;
     db.note.create(req.body).then(function(data) {
       res.json(data);
+    }).catch(function(err) {
+
     });
   });
 

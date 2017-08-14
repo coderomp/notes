@@ -3,7 +3,9 @@ module.exports = function(sequelize, DataTypes) {
     note: {
       type: DataTypes.TEXT,
       allowNull: false,
-      len: [1]
+      validate: {
+        notEmpty: true
+      }
     }
   });
 
