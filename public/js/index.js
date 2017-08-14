@@ -29,7 +29,7 @@ $(document).ready(function() {
                 var newNote = $("<div class='note'>");
                 var timestamp = moment(data.createdAt).format('M/D/YYYY - h:mm A');
                 timestamp = '<span class="timestamp">' + timestamp + ': </span>';
-                newNote.text(timestamp + ': ' + data.note.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+                newNote.html(timestamp + ': ' + data.note.replace(/(?:\r\n|\r|\n)/g, '<br />'));
                 notesContainer.append(newNote);
                 $('#add-textarea').val('');
             });
