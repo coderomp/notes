@@ -26,6 +26,23 @@ module.exports = function(app) {
     });
   });
 
+  // GET route for getting all of the posts
+  app.post("/api/find-notes", function(req, res) {
+    var filter = {};
+
+    if (req.body.find != '') {
+      filter.where = {
+        note: {
+          $like: '%' + req.body.find + '%'
+        }
+      }
+    }
+
+    db.note.findAll(filter).then(function(data) {
+      res.json(data);
+    });
+  });
+
   // Get rotue for retrieving a single post
   app.get("/api/notes/:id", function(req, res) {
     // Here we add an "include" property to our options in our findOne query
@@ -43,8 +60,10 @@ module.exports = function(app) {
 
   // POST route for saving a new post
   app.post("/api/notes", function(req, res) {
-    db.Post.create(req.body).then(function(dbPost) {
-      res.json(dbPost);
+    var note = req.body;
+    note.noteTypeId = 1;
+    db.note.create(req.body).then(function(data) {
+      res.redirect('/');
     });
   });
 
