@@ -63,7 +63,7 @@ module.exports = function(app) {
     var note = req.body;
     note.noteTypeId = 1;
     db.note.create(req.body).then(function(data) {
-      res.redirect('/');
+      res.json(data);
     });
   });
 

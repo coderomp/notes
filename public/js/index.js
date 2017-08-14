@@ -23,8 +23,12 @@ $(document).ready(function() {
     $('#add-button').click(function() {
         var note = $('#add-textarea').val().trim();
         $.post('/api/notes', {note: note})
-            .done(function( data ) {
-                refreshNotesContainer();
+            .done(function(data) {
+                var notesContainer = $('#notes-container');
+                var newNote = $("<div class='note'>");
+                var timestamp = moment(data.createdAt).format('M/D/YYYY - h:mm A');
+                newNote.text(timestamp + ': ' + data.note);
+                notesContainer.append(newNote);
                 $('#add-textarea').val('');
             });
     });
