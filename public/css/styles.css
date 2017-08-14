@@ -25,6 +25,10 @@ div.header {
     overflow: auto;
 }
 
+.timestamp {
+    color: #ffff00;
+}
+
 div.footer {
     height: 10vh;
     position: absolute;
