@@ -1,12 +1,41 @@
-.hidden {
-    display: none;
+body, html {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
-div.bottom {
-  position: fixed;
-  bottom: 0;
+div.header {
+    height: 10vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+}
 
-  /* And if you want the div to be full-width: */
-  left: 0;
-  right: 0;
+.row-fluid {
+    position: absolute;
+    min-height: 80vh;
+    top: 10vh;
+    bottom: 10vh;
+    left: 0px;
+    right: 0px;
+    overflow: auto;
+}
+
+div.footer {
+    height: 10vh;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+}
+
+textarea.input-textarea {
+    height: 100%;
+}
+
+.hidden {
+    display: none;
 }
