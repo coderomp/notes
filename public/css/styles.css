@@ -14,6 +14,8 @@ div.header {
 }
 
 .row-fluid {
+    color: #bbb;
+    background-color: #000;
     position: absolute;
     min-height: 80vh;
     top: 10vh;
@@ -33,6 +35,9 @@ div.footer {
 }
 
 textarea.input-textarea {
+    border-radius:0px;
+    background-color: #bbb;
+    border-color: #888;
     height: 100%;
 }
 
