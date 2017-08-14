@@ -11,7 +11,7 @@ $(document).ready(function() {
             for (var i=0; i < data.length; i++) {
                 var newNote = $("<div class='note'>");
                 var timestamp = moment(data[i].createdAt).format('M/D/YYYY - h:mm A');
-                newNote.text(timestamp + ': ' + data[i].note);
+                newNote.html(timestamp + ': ' + data[i].note.replace(/(?:\r\n|\r|\n)/g, '<br />'));
                 notesContainer.append(newNote);
             }
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
                 var notesContainer = $('#notes-container');
                 var newNote = $("<div class='note'>");
                 var timestamp = moment(data.createdAt).format('M/D/YYYY - h:mm A');
-                newNote.text(timestamp + ': ' + data.note);
+                newNote.text(timestamp + ': ' + data.note.replace(/(?:\r\n|\r|\n)/g, '<br />'));
                 notesContainer.append(newNote);
                 $('#add-textarea').val('');
             });
