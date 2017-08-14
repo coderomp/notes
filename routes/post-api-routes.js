@@ -22,7 +22,12 @@ module.exports = function(app) {
 
     db.note.findAll({}).then(function(data) {
       for (var i = 0; i < data.length; i++) {
-        data[i].note = anchorme(data[i].note);
+        data[i].note = anchorme(data[i].note, {
+          attributes: [{
+            name:"target",
+            value:"_blank"
+          }]
+        });
       }
 
       res.json(data);
@@ -43,7 +48,12 @@ module.exports = function(app) {
 
     db.note.findAll(filter).then(function(data) {
       for (var i = 0; i < data.length; i++) {
-        data[i].note = anchorme(data[i].note);
+        data[i].note = anchorme(data[i].note, {
+          attributes: [{
+            name:"target",
+            value:"_blank"
+          }]
+        });
       }
 
       res.json(data);
