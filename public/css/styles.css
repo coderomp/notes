@@ -4,10 +4,19 @@ body, html {
     overflow: hidden;
 }
 
-div.header {
+div.header1 {
     height: 10vh;
     position: absolute;
     top: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+}
+
+div.header2 {
+    height: 10vh;
+    position: absolute;
+    top: 10vh;
     left: 0px;
     right: 0px;
     overflow: hidden;
@@ -18,8 +27,8 @@ div.header {
     background-color: #000;
     position: absolute;
     min-height: 80vh;
-    top: 10vh;
-    bottom: 10vh;
+    top: 20vh;
+    bottom: 0px;
     left: 0px;
     right: 0px;
     overflow: auto;
@@ -27,15 +36,6 @@ div.header {
 
 .timestamp {
     color: #ffff00;
-}
-
-div.footer {
-    height: 10vh;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    overflow: hidden;
 }
 
 textarea.input-textarea {

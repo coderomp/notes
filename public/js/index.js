@@ -32,6 +32,8 @@ $(document).ready(function() {
                 newNote.html(timestamp + data.note.replace(/(?:\r\n|\r|\n)/g, '<br />'));
                 notesContainer.append(newNote);
                 $('#add-textarea').val('');
+
+                notesContainer[0].scrollTop = notesContainer[0].scrollHeight;
             });
     });
 

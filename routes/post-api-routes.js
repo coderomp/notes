@@ -62,9 +62,6 @@ module.exports = function(app) {
 
   // Get rotue for retrieving a single post
   app.get("/api/notes/:id", function(req, res) {
-    // Here we add an "include" property to our options in our findOne query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Author
     db.Post.findOne({
       where: {
         id: req.params.id
@@ -80,6 +77,13 @@ module.exports = function(app) {
     var note = req.body;
     note.noteTypeId = 1;
     db.note.create(req.body).then(function(data) {
+      data.note = anchorme(data.note, {
+        attributes: [{
+          name:"target",
+          value:"_blank"
+        }]
+      });
+
       res.json(data);
     }).catch(function(err) {
 
