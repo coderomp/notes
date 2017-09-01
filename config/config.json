@@ -1,4 +1,7 @@
 {
+  "all": {
+    "contextSearchSize": 1
+  },
   "development": {
     "username": "root",
     "password": null,

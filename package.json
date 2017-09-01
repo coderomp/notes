@@ -33,6 +33,7 @@
     "forever": "^0.15.3",
     "forever-monitor": "^1.7.1",
     "mysql2": "^1.4.0",
+    "nodemon": "^1.11.0",
     "sequelize": "^4.4.3",
     "sequelize-cli": "^2.8.0"
   }

@@ -8,109 +8,136 @@
 // Requiring our models
 var db = require("../models");
 var anchorme = require("anchorme").default;
+var config = require(__dirname + '/../config/config.json')['all'];
 
 // Routes
 // =============================================================
 module.exports = function(app) {
 
-  // GET route for getting all of the posts
-  app.get("/api/notes", function(req, res) {
-    var query = {};
-    if (req.query.note_id) {
-      query.id = req.query.id;
-    }
-
-    db.note.findAll({}).then(function(data) {
-      for (var i = 0; i < data.length; i++) {
-        data[i].note = anchorme(data[i].note, {
-          attributes: [{
-            name:"target",
-            value:"_blank"
-          }]
-        });
-      }
-
-      res.json(data);
-    });
-  });
-
-  // GET route for getting all of the posts
-  app.post("/api/find-notes", function(req, res) {
-    var filter = {};
-
-    if (req.body.find != '') {
-      filter.where = {
-        note: {
-          $like: '%' + req.body.find + '%'
+    // GET route for getting all of the posts
+    app.get("/api/notes", function(req, res) {
+        var query = {};
+        if (req.query.note_id) {
+            query.id = req.query.id;
         }
-      }
-    }
 
-    db.note.findAll(filter).then(function(data) {
-      for (var i = 0; i < data.length; i++) {
-        data[i].note = anchorme(data[i].note, {
-          attributes: [{
-            name:"target",
-            value:"_blank"
-          }]
+        db.note.findAll({}).then(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i].note = anchorme(data[i].note, {
+                    attributes: [{
+                        name: "target",
+                        value: "_blank"
+                    }]
+                });
+            }
+
+            res.json(data);
         });
-      }
-
-      res.json(data);
     });
-  });
 
-  // Get rotue for retrieving a single post
-  app.get("/api/notes/:id", function(req, res) {
-    db.Post.findOne({
-      where: {
-        id: req.params.id
-      },
-      include: [db.Author]
-    }).then(function(dbPost) {
-      res.json(dbPost);
-    });
-  });
+    // GET route for getting all of the posts
+    app.post("/api/find-notes", function(req, res) {
+        var filter = {};
 
-  // POST route for saving a new post
-  app.post("/api/notes", function(req, res) {
-    var note = req.body;
-    note.noteTypeId = 1;
-    db.note.create(req.body).then(function(data) {
-      data.note = anchorme(data.note, {
-        attributes: [{
-          name:"target",
-          value:"_blank"
-        }]
-      });
-
-      res.json(data);
-    }).catch(function(err) {
-
-    });
-  });
-
-  // DELETE route for deleting posts
-  app.delete("/api/notes/:id", function(req, res) {
-    db.Post.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function(dbPost) {
-      res.json(dbPost);
-    });
-  });
-
-  // PUT route for updating posts
-  app.put("/api/notes", function(req, res) {
-    db.Post.update(
-      req.body,
-      {
-        where: {
-          id: req.body.id
+        if (req.body.find != '') {
+            filter.where = {
+                note: {
+                    $like: '%' + req.body.find + '%'
+                }
+            }
         }
-      }).then(function(dbPost) {
-        res.json(dbPost);
-      });
-  });
+
+        function includeContext(data, contextSize, callback) {
+            var notesWithContext = [];
+            var callbackCount = 0;
+            for (var i = 0; i < data.length; i++) {
+                var id = data[i].id;
+                var startId = (id < (contextSize)) ? 0 : (id - contextSize);
+
+                filter = {};
+                filter.where = {
+                    id: {
+                        $between: [startId, startId + (contextSize * 2)]
+                    }
+                }
+
+                db.note.findAll(filter).then(function(subData) {
+                    callbackCount++;
+                    notesWithContext = notesWithContext.concat(subData);
+                    if (callbackCount == data.length) {
+                        callback(notesWithContext);
+                    }
+                });
+            }
+        }
+
+        // contextSearchSize is the number of rows to include below and above the found line.
+        db.note.findAll(filter).then(function(data) {
+            data = includeContext(data, config.contextSearchSize, function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    data[i].note = anchorme(data[i].note, {
+                        attributes: [{
+                            name: "target",
+                            value: "_blank"
+                        }]
+                    });
+                }
+                res.json(data);
+            });
+        });
+    });
+
+
+    // Get rotue for retrieving a single post
+    app.get("/api/notes/:id", function(req, res) {
+        db.Post.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: [db.Author]
+        }).then(function(dbPost) {
+            res.json(dbPost);
+        });
+    });
+
+    // POST route for saving a new post
+    app.post("/api/notes", function(req, res) {
+        var note = req.body;
+        note.noteTypeId = 1;
+        db.note.create(req.body).then(function(data) {
+            data.note = anchorme(data.note, {
+                attributes: [{
+                    name: "target",
+                    value: "_blank"
+                }]
+            });
+
+            res.json(data);
+        }).catch(function(err) {
+
+        });
+    });
+
+    // DELETE route for deleting posts
+    app.delete("/api/notes/:id", function(req, res) {
+        db.Post.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(function(dbPost) {
+            res.json(dbPost);
+        });
+    });
+
+    // PUT route for updating posts
+    app.put("/api/notes", function(req, res) {
+        db.Post.update(
+            req.body, {
+                where: {
+                    id: req.body.id
+                }
+            }).then(function(dbPost) {
+            res.json(dbPost);
+        });
+    });
 };
